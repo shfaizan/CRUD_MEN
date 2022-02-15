@@ -14,25 +14,26 @@ app.get('/',(req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/quotes',(req, res) => {
-    console.log(req.body)
-})
+
 
 // Connecting local mongo database using callback function
-// MongoClient.connect("mongodb://localhost:27017/general", (err, client) => {
+// MongoClient.connect("mongodb://localhost:27017/avenger", (err, client) => {
 //     if (err) return console.error(err)
 //     console.log('Connected to Database')
 //   })
 
 // Connecting local mongo database using promise function
-MongoClient.connect("mongodb://localhost:27017/general", { useUnifiedTopology: true })
+MongoClient.connect("mongodb://localhost:27017/avenger", { useUnifiedTopology: true })
     .then(client => {
         console.log('Connected to Database')
-        const db = client.db('avengers_quotes')
+        const db = client.db('avenger')
         const collection = db.collection('quotes')
-        app.use()
-        app.get()
-        app.post()
-        app.listen()
+        console.log('Connected to Collection')
+        app.post('/quotes', (req, res) => {
+            console.log('heeeerrrrr')
+            collection.insertOne(req.body)
+            console.log('now heeeerrrrr')
+        })
+
     })
-    .
+    .catch(err => console.error(err))
